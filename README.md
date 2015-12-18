@@ -6,13 +6,11 @@ Allows Amazon Echo to communicate with arbitrary http services using the Hue API
 Derrived from http://github.com/armzilla/amazon-echo-ha-bridge
 
 #### Notes
-**TODO:** I thought I had gotten this to the point where I could define the "onURL" and "offURL" for each light (or arbitrary 
-device) as you do in amazon-echo-ha-bridge, but I don't see this anywhere in my code. I'll check my devices later to see 
-if I have pushed the latest code.  
-
-I wish I had written this README 5 months ago when I started this project. But I didn't. Sorry.  
-
-Pull requests welcome.
+This project is incomplete. It began as an expirement using UPnP discovery with Amazon Echo via the Hue API.  
+The UPnP part should be working, if I recall correctly, but it still needs an interface for defining new lights (currently defined in config.json) and for responding to Hue API requests (lights on/off).
+##### TODO:
+* Provide API for responding to onn/off requests
+* Provide configuration interface for listing/adding lights, and defining onURL/offURL for each light
 
 ## Installation
 ```
