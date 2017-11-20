@@ -9,8 +9,7 @@
   "author": "Sam Hiatt <samhiatt@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "fs": "0.0.1-security",
-    "http": "0.0.0",
+    "hapi": "^16.6.2",
     "peer-ssdp": "0.0.5"
   }
 }
