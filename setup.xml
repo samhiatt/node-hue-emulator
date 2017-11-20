@@ -4,10 +4,10 @@
 <major>1</major>
 <minor>0</minor>
 </specVersion>
-<URLBase>http://192.168.42.102:8082/</URLBase>
+<URLBase>http://192.168.1.124:8082/</URLBase>
 <device>
 <deviceType>urn:schemas-upnp-org:device:Basic:1</deviceType>
-<friendlyName>Amazon-Echo-HA-Bridge (192.168.42.102)</friendlyName>
+<friendlyName>Amazon-Echo-HA-Bridge (192.168.1.124)</friendlyName>
 <manufacturer>Royal Philips Electronics</manufacturer>
 <manufacturerURL>http://www.armzilla..com</manufacturerURL>
 <modelDescription>Hue Emulator for Amazon Echo bridge</modelDescription>
