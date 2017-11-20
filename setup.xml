@@ -1,46 +1,38 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <root xmlns="urn:schemas-upnp-org:device-1-0">
-<specVersion>
-<major>1</major>
-<minor>0</minor>
-</specVersion>
-<URLBase>http://192.168.1.124:8082/</URLBase>
-<device>
-<deviceType>urn:schemas-upnp-org:device:Basic:1</deviceType>
-<friendlyName>Amazon-Echo-HA-Bridge (192.168.1.124)</friendlyName>
-<manufacturer>Royal Philips Electronics</manufacturer>
-<manufacturerURL>http://www.armzilla..com</manufacturerURL>
-<modelDescription>Hue Emulator for Amazon Echo bridge</modelDescription>
-<modelName>Philips hue bridge 2012</modelName>
-<modelNumber>929000226503</modelNumber>
-<modelURL>http://www.armzilla.com/amazon-echo-ha-bridge</modelURL>
-<serialNumber>01189998819991197253</serialNumber>
-<UDN>uuid:88f6698f-2c83-4393-bd03-cd54a9f8595</UDN>
-<serviceList>
-<service>
-<serviceType>(null)</serviceType>
-<serviceId>(null)</serviceId>
-<controlURL>(null)</controlURL>
-<eventSubURL>(null)</eventSubURL>
-<SCPDURL>(null)</SCPDURL>
-</service>
-</serviceList>
-<presentationURL>index.html</presentationURL>
-<iconList>
-<icon>
-<mimetype>image/png</mimetype>
-<height>48</height>
-<width>48</width>
-<depth>24</depth>
-<url>hue_logo_0.png</url>
-</icon>
-<icon>
-<mimetype>image/png</mimetype>
-<height>120</height>
-<width>120</width>
-<depth>24</depth>
-<url>hue_logo_3.png</url>
-</icon>
-</iconList>
-</device>
+	<specVersion>
+		<major>1</major>
+		<minor>0</minor>
+	</specVersion>
+	<URLBase>http://##URLBASE##</URLBase>
+	<device>
+		<deviceType>urn:schemas-upnp-org:device:Basic:1</deviceType>
+		<friendlyName>Philips hue (##URLBASE##)</friendlyName>
+		<manufacturer>Royal Philips Electronics</manufacturer>
+		<manufacturerURL>http://www.philips.com</manufacturerURL>
+		<modelDescription>Philips hue Personal Wireless Lighting
+		</modelDescription>
+		<modelName>Philips hue bridge 2015</modelName>
+		<modelNumber>929000226503</modelNumber>
+		<modelURL>http://www.meethue.com</modelURL>
+		<serialNumber>0017880ae670</serialNumber>
+		<UDN>uuid:2f402f80-da50-11e1-9b23-0017880ae670</UDN>
+		<presentationURL>index.html</presentationURL>
+		<iconList>
+			<icon>
+				<mimetype>image/png</mimetype>
+				<height>48</height>
+				<width>48</width>
+				<depth>24</depth>
+				<url>hue_logo_0.png</url>
+			</icon>
+			<icon>
+				<mimetype>image/png</mimetype>
+				<height>120</height>
+				<width>120</width>
+				<depth>24</depth>
+				<url>hue_logo_3.png</url>
+			</icon>
+		</iconList>
+	</device>
 </root>

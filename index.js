@@ -4,6 +4,14 @@ const Hapi = require('hapi');
 var ssdp = require('peer-ssdp');
 var peer = ssdp.createPeer();
 
+var setup = fs.readFileSync('setup.xml').toString();
+
+var address = '192.168.1.124';
+var host = '192.168.1.124';
+var port = 8082;
+
+setup.replace('##URLBASE##', host + ':' + port);
+
 //  handle peer ready event. This event will be emitted after `peer.start()` is called.
 peer.on('ready', function () {
   console.log('UPNP server listening on port 1900.');
@@ -59,8 +67,8 @@ var config = JSON.parse(fs.readFileSync('config.json'));
 // Create a server with a host and port
 const server = new Hapi.Server();
 server.connection({
-  port: 8082,
-  address: '192.168.1.124'
+  port: port,
+  address: address
 });
 
 // Add the route
@@ -118,7 +126,6 @@ server.route({
   path: '/upnp/amazon-ha-bridge/setup.xml',
   handler: function (request, reply) {
     console.log('SETUP', request.url.path);
-    var setup = fs.readFileSync('setup.xml');
     return reply(setup).type('application/xml');
   }
 });
