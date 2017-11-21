@@ -1,15 +1,19 @@
 {
-  "name": "node-hue-emulator",
+  "name": "alexa2mqtt",
   "version": "0.0.1",
   "description": "Nodejs port of github.com/armzilla/amazon-echo-ha-bridge",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Sam Hiatt <samhiatt@gmail.com>",
+  "author": "Kai Kramer",
   "license": "ISC",
   "dependencies": {
     "hapi": "^16.6.2",
-    "peer-ssdp": "0.0.5"
+    "mqtt": "^2.14.0",
+    "peer-ssdp": "0.0.5",
+    "require-yaml": "0.0.1",
+    "yalm": "^4.1.0",
+    "yargs": "^10.0.3"
   }
 }

@@ -1,0 +1,22 @@
+alexa:
+  - name: Haus
+    id: "1"
+    switch:
+      topic: XXX
+      on: 1
+      off: 0
+    control:
+      topic: XXX
+      value: raw,int,float 
+  - name: Licht
+    id: "2"
+    switch:
+      topic: XXX
+      on: 1
+      off: 0
+    control:
+      topic: XXX
+      value: raw,int,float 
+
+
+      
