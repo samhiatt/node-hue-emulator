@@ -6,7 +6,7 @@ var config = require('yargs')
   .describe('n', 'instance name. used as mqtt client id and as prefix for connected topic')
   .describe('u', 'mqtt broker url. See https://github.com/mqttjs/MQTT.js#connect-using-a-url')
   .describe('p', 'port')
-  .describe('k', 'binding adress')
+  .describe('b', 'binding adress')
   .describe('e', 'publishing host')
   .describe('c', 'configuration file')
   .describe('h', 'show help')
@@ -18,13 +18,15 @@ var config = require('yargs')
     'e': 'publish',
     'p': 'port',
     'c': 'config',
-    'v': 'verbosity'
+    'v': 'verbose'
   })
   .default({
     'u': 'mqtt://127.0.0.1',
     'n': 'fakehue',
     'v': 'info',
-    'c': './config.yml'
+    'c': './config.yml',
+    'b': '0.0.0.0',
+    'p': 8082
   })
   .version()
   .help('help')

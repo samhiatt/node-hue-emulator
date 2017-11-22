@@ -38,5 +38,6 @@ COPY config.js .
 COPY alexa2mqtt.js .
 COPY setup.xml .
 VOLUME ["/data"]
-EXPOSE 1900 8082
+EXPOSE 1900/udp 
+EXPOSE 8082
 CMD ./alexa2mqtt.js 

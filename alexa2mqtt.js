@@ -8,15 +8,16 @@ var log = require('yalm');
 var config = require('./config.js');
 require('require-yaml');
 
-var address = '0.0.0.0';
-var host = '192.168.1.124';
-var port = 8082;
+var address = config.bind;
+var host = config.publish;
+var port = config.port;
 
 var mqttConnected;
 
-log.setLevel(config.verbosity);
+log.setLevel(config.verbose);
 
 log.info(pkg.name + ' ' + pkg.version + ' starting');
+log.info(config);
 
 log.info('Config file: ' + config.config);
 var alexaConfigFile = require(config.config).alexa;
