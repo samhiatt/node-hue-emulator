@@ -1,13 +1,30 @@
 {
   "name": "alexa2mqtt",
   "version": "0.0.1",
-  "description": "Nodejs port of github.com/armzilla/amazon-echo-ha-bridge",
+  "description": "km200 to mqtt bridge for mqtt-smarthome",
   "main": "alexa2mqtt.js",
+  "preferGlobal": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "semistandard && exit 0",
+    "start": "node ./alexa2mqtt.js",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krambox/alexa2mqtt"
+  },
+  "bugs": {
+    "url": "https://github.com/krambox/alexa2mqtt/issues"
+  },
+  "homepage": "https://github.com/krambox/alexa2mqtt#readme",
+  "keywords": [
+    "mqtt",
+    "smarthome",
+    "alecxa",
+    "hue"
+  ],
   "author": "Kai Kramer",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "hapi": "^16.6.2",
     "mqtt": "^2.14.0",
@@ -15,5 +32,13 @@
     "require-yaml": "0.0.1",
     "yalm": "^4.1.0",
     "yargs": "^10.0.3"
-  }
+  },
+  "devDependencies": {
+    "pre-commit": "^1.2.2",
+    "semantic-release": "^9.1.1",
+    "semistandard": "^11.0.0"
+  },
+  "pre-commit": [
+    "test"
+  ]
 }
