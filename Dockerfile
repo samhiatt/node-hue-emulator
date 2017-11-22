@@ -12,6 +12,7 @@ WORKDIR /root/app
 ENTRYPOINT ["/sbin/tini", "--"]
 # copy project file
 COPY package.json .
+COPY package-lock.json .
  
 #
 # ---- Dependencies ----
@@ -32,7 +33,8 @@ WORKDIR /root/app
 # copy production node_modules
 COPY --from=dependencies /root/app/prod_node_modules ./node_modules
 # copy app sources
-COPY . .
+COPY config.js .
+COPY alexa2mqtt.js .
 VOLUME ["/data"]
 EXPOSE 1900 8082
 CMD ./alexa2mqtt.js 
