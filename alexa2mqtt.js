@@ -172,22 +172,20 @@ server.route({
   path: '/api/{name}/lights/{id}/state',
   handler: function (request, reply) {
     var command = JSON.parse(request.payload.toString());
-    log.info('PUT', request.url.path, command);
-    log.info('command', request.params.id, command.on);
+    log.debug('PUT', request.url.path, command);
+    log.INFO('command', request.params.id, command);
     var mqttConfifg = alexaMQTTConfig[request.params.id];
     if (mqttConfifg) {
       var topic = mqttConfifg.switch.topic;
-      var value;
+      var value = mqttConfifg.switch.off;
       if (command.bri) {
         value = '' + command.bri / 2.55;
         topic = mqttConfifg.control.topic;
       } else if (command.on) {
         value = mqttConfifg.switch.on;
-      } else {
-        value = mqttConfifg.switch.off;
       }
       mqtt.publish(topic, value, function () {
-        log.info('meta', topic, value);
+        log.debug('meta', topic, value);
       });
     }
     var response = [{
@@ -195,7 +193,7 @@ server.route({
         ['/lights/' + request.params.id + '/state/on']: true
       }
     }];
-    log.info(response);
+    log.debug(response);
     return reply(response).type('application/json');
   },
   config: {
