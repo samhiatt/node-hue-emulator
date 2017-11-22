@@ -19,6 +19,20 @@ Allows Amazon Echo to communicate with arbitrary http services using the Hue API
 
 Derrived from http://github.com/armzilla/amazon-echo-ha-bridge
 
+## Config
+
+```
+alexa:
+  - name: Licht
+    id: "1"
+    switch:
+      topic: lox/set/arbeitszimmer/beleuchtung/arbeitszimmer
+      on: on
+      off: off
+    control:
+      topic: lox/set/arbeitszimmer/beleuchtung/arbeitszimmer
+```
+
 ## Build and run local Docker container
 
 In Progress - not working at Mac and Synology (upnp discovery problem)
