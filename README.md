@@ -21,6 +21,12 @@ Derrived from http://github.com/armzilla/amazon-echo-ha-bridge
 
 ## Build and run local Docker container
 
+In Progress - not working at Mac and Synology (upnp discovery problem)
+
     docker build -t alexa2mqtt . && docker run --env-file ./alexa2mqtt.env -p 1900:1900 -p 8082:8082 -v /Volumes/data/smarthome/:/data -it alexa2mqtt 
 
     docker run --env-file /volume1/data/smarthome/alexa.env -p 1900:1900 -p 8082:8082 -v /volume1/data/smarthome/:/data -it alexa2mqtt
+
+##  Alexa Config
+
+https://alexa.amazon.de/spa/index.html#appliances
