@@ -11,12 +11,12 @@ alexa:
   - name: Licht
     id: "2"
     switch:
-      topic: XXX
-      on: 1
-      off: 0
+      topic: lox/set/arbeitszimmer/beleuchtung/arbeitszimmer
+      on: on
+      off: off
     control:
       topic: XXX
-      value: raw,int,float 
+      value: raw,percent,ratio
 
 
       
