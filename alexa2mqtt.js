@@ -23,8 +23,14 @@ var alexaConfigFile = require(config.config).alexa;
 log.debug(alexaConfigFile);
 
 var alexaConfig = {};
+var alexaMQTTConfig = {};
 for (let index = 0; index < alexaConfigFile.length; index++) {
   const element = alexaConfigFile[index];
+  alexaMQTTConfig[element.id] = {
+    name: element.name,
+    switch: element.switch,
+    comntrol: element.comntrol
+  };
   alexaConfig[element.id] = {
     'state': {
       'on': false,
@@ -128,8 +134,6 @@ peer.start();
 var setupFile = fs.readFileSync('setup.xml').toString();
 setupFile.replace('##URLBASE##', host + ':' + port);
 
-var alexaConfig = JSON.parse(fs.readFileSync('config.json'));
-
 // Create a server with a host and port
 const server = new Hapi.Server();
 server.connection({
@@ -169,6 +173,23 @@ server.route({
   handler: function (request, reply) {
     var command = JSON.parse(request.payload.toString());
     log.info('PUT', request.url.path, command);
+    log.info('command', request.params.id, command.on);
+    var mqttConfifg = alexaMQTTConfig[request.params.id];
+    if (mqttConfifg) {
+      var topic = mqttConfifg.switch.topic;
+      var value;
+      if (command.bri) {
+        value = '' + command.bri / 2.55;
+        topic = mqttConfifg.control.topic;
+      } else if (command.on) {
+        value = mqttConfifg.switch.on;
+      } else {
+        value = mqttConfifg.switch.off;
+      }
+      mqtt.publish(topic, value, function () {
+        log.info('meta', topic, value);
+      });
+    }
     var response = [{
       success: {
         ['/lights/' + request.params.id + '/state/on']: true

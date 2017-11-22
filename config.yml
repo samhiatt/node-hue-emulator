@@ -15,8 +15,4 @@ alexa:
       on: on
       off: off
     control:
-      topic: XXX
-      value: raw,percent,ratio
-
-
-      
+      topic: lox/set/arbeitszimmer/beleuchtung/arbeitszimmer
