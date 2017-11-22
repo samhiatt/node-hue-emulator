@@ -30,7 +30,7 @@ for (let index = 0; index < alexaConfigFile.length; index++) {
   alexaMQTTConfig[element.id] = {
     name: element.name,
     switch: element.switch,
-    comntrol: element.comntrol
+    control: element.control
   };
   alexaConfig[element.id] = {
     'state': {
@@ -176,6 +176,7 @@ server.route({
     log.debug('PUT', request.url.path, command);
     log.info('command', request.params.id, command);
     var mqttConfifg = alexaMQTTConfig[request.params.id];
+    log.debug(mqttConfifg);
     if (mqttConfifg) {
       var topic = mqttConfifg.switch.topic;
       var value = mqttConfifg.switch.off;
