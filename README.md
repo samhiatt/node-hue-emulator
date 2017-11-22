@@ -18,3 +18,7 @@ NodeJs Hue emulator, with UPnP discovery that works with Amazon Echo
 Allows Amazon Echo to communicate with arbitrary http services using the Hue API. 
 
 Derrived from http://github.com/armzilla/amazon-echo-ha-bridge
+
+## Build and run local Docker container
+
+    docker build -t alexa2mqtt . && docker run --env-file ./alexa2mqtt.env -p 1900:1900 -p 8082:8082 -it alexa2mqtt 

@@ -8,7 +8,7 @@ var log = require('yalm');
 var config = require('./config.js');
 require('require-yaml');
 
-var address = '192.168.1.124';
+var address = '0.0.0.0';
 var host = '192.168.1.124';
 var port = 8082;
 
@@ -173,7 +173,7 @@ server.route({
   handler: function (request, reply) {
     var command = JSON.parse(request.payload.toString());
     log.debug('PUT', request.url.path, command);
-    log.INFO('command', request.params.id, command);
+    log.info('command', request.params.id, command);
     var mqttConfifg = alexaMQTTConfig[request.params.id];
     if (mqttConfifg) {
       var topic = mqttConfifg.switch.topic;
