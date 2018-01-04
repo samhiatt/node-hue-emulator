@@ -136,8 +136,7 @@ var setupFile = fs.readFileSync('setup.xml').toString();
 setupFile.replace('##URLBASE##', host + ':' + port);
 
 // Create a server with a host and port
-const server = new Hapi.Server();
-server.connection({
+const server = new Hapi.Server({
   port: port,
   address: address
 });
