@@ -8,7 +8,7 @@ var ssdp = require('peer-ssdp');
 var Mqtt = require('mqtt');
 var log = require('yalm');
 var config = require('./config.js');
-require('require-yaml');
+var yaml = require('yaml');
 
 var address = config.bind;
 var host = config.publish;
@@ -22,21 +22,8 @@ log.setLevel(config.verbose);
 log.info(pkg.name + ' ' + pkg.version + ' starting');
 log.info(config);
 
-log.info('Config file: ' + config.config);
-var alexaConfigFile = require(config.config).alexa;
-log.debug(alexaConfigFile);
-
-var alexaConfig = {};
-var alexaMQTTConfig = {};
-for (let index = 0; index < alexaConfigFile.length; index++) {
-  const element = alexaConfigFile[index];
-  log.info('Element', element.id, element.name, JSON.stringify(element.switch), JSON.stringify(element.control));
-  alexaMQTTConfig[element.id] = {
-    name: element.name,
-    switch: element.switch,
-    control: element.control
-  };
-  alexaConfig[element.id] = {
+function buildExtendedColorLight (name) {
+  return {
     'state': {
       'on': false,
       'bri': 0,
@@ -53,10 +40,42 @@ for (let index = 0; index < alexaConfigFile.length; index++) {
       'reachable': true
     },
     'type': 'Extended color light',
-    'name': element.name,
+    'name': name,
     'modelid': 'LCT001',
     'swversion': '66009461'
   };
+}
+
+log.info('Config file: ' + config.config);
+
+var alexaConfigFile;
+fs.watch(config.config, function (event, filename) {
+  if (filename) {
+    log.info('Reload config provided: ' + filename);
+    buildConfig();
+  }
+});
+
+var alexaConfig = {};
+var alexaMQTTConfig = {};
+buildConfig();
+
+function buildConfig () {
+  log.debug(config.config);
+  alexaConfigFile = yaml.parse(fs.readFileSync(config.config, 'utf8')).alexa;
+  log.debug(alexaConfigFile);
+  alexaConfig = {};
+  alexaMQTTConfig = {};
+  for (let index = 0; index < alexaConfigFile.length; index++) {
+    const element = alexaConfigFile[index];
+    log.info('Element', element.id, element.name, JSON.stringify(element.switch), JSON.stringify(element.control));
+    alexaMQTTConfig[element.id] = {
+      name: element.name,
+      switch: element.switch,
+      control: element.control
+    };
+    alexaConfig[element.id] = buildExtendedColorLight(element.name);
+  }
 }
 
 log.info('mqtt trying to connect', config.url);
