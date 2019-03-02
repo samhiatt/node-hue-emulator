@@ -51,8 +51,8 @@ log.info('Config file: ' + config.config);
 var alexaConfigFile;
 fs.watch(config.config, function (event, filename) {
   if (filename) {
-    log.info('Reload config provided: ' + filename);
-    buildConfig();
+    log.info('Reload config');
+    setTimeout(buildConfig, 1500, 'funky');
   }
 });
 
@@ -61,7 +61,7 @@ var alexaMQTTConfig = {};
 buildConfig();
 
 function buildConfig () {
-  log.debug(config.config);
+  log.info(config.config);
   alexaConfigFile = yaml.parse(fs.readFileSync(config.config, 'utf8')).alexa;
   log.debug(alexaConfigFile);
   alexaConfig = {};
