@@ -29,6 +29,7 @@ var alexaConfig = {};
 var alexaMQTTConfig = {};
 for (let index = 0; index < alexaConfigFile.length; index++) {
   const element = alexaConfigFile[index];
+  log.info('Element', element.id, element.name, JSON.stringify(element.switch), JSON.stringify(element.control));
   alexaMQTTConfig[element.id] = {
     name: element.name,
     switch: element.switch,
@@ -148,7 +149,7 @@ server.route({
   method: 'GET',
   path: '/api/{name}/lights',
   handler: function (request, h) {
-    log.info('LIGHTS', request.route.path);
+    log.info('LIGHTS', request.url.pathname);
     const response = h.response(alexaConfig);
     response.type('application/json');
     return response;
@@ -160,7 +161,7 @@ server.route({
   method: 'GET',
   path: '/api/{name}/lights/{id}',
   handler: function (request, h) {
-    log.info('LIGHTS', request.route.path);
+    log.info('LIGHTS', request.url.pathname);
     var lightState = alexaConfig[request.params.id];
     if (lightState) {
       const response = h.response(lightState);
@@ -178,8 +179,8 @@ server.route({
   path: '/api/{name}/lights/{id}/state',
   handler: function (request, h) {
     var command = JSON.parse(request.payload.toString());
-    log.debug('PUT', request.route.path);
-    log.info('command', request.route.path);
+    log.debug('PUT', request.url.pathname);
+    log.info('command', request.url.pathname);
     var mqttConfifg = alexaMQTTConfig[request.params.id];
     log.debug(mqttConfifg);
     if (mqttConfifg) {
@@ -219,7 +220,7 @@ server.route({
   method: 'GET',
   path: '/upnp/amazon-ha-bridge/setup.xml',
   handler: function (request, h) {
-    log.info('SETUP', request.route.path);
+    log.info('SETUP', request.url.pathname);
     const r = h.response(setupFile);
     r.type('application/xml');
     return r;
@@ -231,7 +232,7 @@ server.route({
   method: '*',
   path: '/{path*}',
   handler: function (request, h) {
-    log.error('MISC', request.route.path);
+    log.error('MISC', request.url.pathname);
     throw Boom.badRequest();
   }
 });
