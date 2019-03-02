@@ -2,6 +2,8 @@
 var pkg = require('./package.json');
 var fs = require('fs');
 const Hapi = require('hapi');
+const Boom = require('boom');
+
 var ssdp = require('peer-ssdp');
 var Mqtt = require('mqtt');
 var log = require('yalm');
@@ -57,13 +59,13 @@ for (let index = 0; index < alexaConfigFile.length; index++) {
 
 log.info('mqtt trying to connect', config.url);
 
-var mqtt = Mqtt.connect(config.url, {will: {topic: config.name + '/connected', payload: '0', retain: true}});
+var mqtt = Mqtt.connect(config.url, { will: { topic: config.name + '/connected', payload: '0', retain: true } });
 
 mqtt.on('connect', function () {
   mqttConnected = true;
 
   log.info('mqtt connected', config.url);
-  mqtt.publish(config.name + '/connected', '1', {retain: true});
+  mqtt.publish(config.name + '/connected', '1', { retain: true });
 
   log.info('mqtt subscribe', config.name + '/set/#');
   mqtt.subscribe(config.name + '/set/#');
@@ -145,9 +147,11 @@ const server = new Hapi.Server({
 server.route({
   method: 'GET',
   path: '/api/{name}/lights',
-  handler: function (request, reply) {
-    log.info('LIGHTS', request.url.path);
-    return reply(alexaConfig).type('application/json');
+  handler: function (request, h) {
+    log.info('LIGHTS', request.route.path);
+    const response = h.response(alexaConfig);
+    response.type('application/json');
+    return response;
   }
 });
 
@@ -155,13 +159,15 @@ server.route({
 server.route({
   method: 'GET',
   path: '/api/{name}/lights/{id}',
-  handler: function (request, reply) {
-    log.info('LIGHTS', request.url.path);
+  handler: function (request, h) {
+    log.info('LIGHTS', request.route.path);
     var lightState = alexaConfig[request.params.id];
     if (lightState) {
-      return reply(lightState).type('application/json');
+      const response = h.response(lightState);
+      response.type('application/json');
+      return response;
     } else {
-      return reply(400);
+      throw Boom.badRequest();
     }
   }
 });
@@ -170,10 +176,10 @@ server.route({
 server.route({
   method: 'PUT',
   path: '/api/{name}/lights/{id}/state',
-  handler: function (request, reply) {
+  handler: function (request, h) {
     var command = JSON.parse(request.payload.toString());
-    log.debug('PUT', request.url.path, command);
-    log.info('command', request.params.id, command);
+    log.debug('PUT', request.route.path);
+    log.info('command', request.route.path);
     var mqttConfifg = alexaMQTTConfig[request.params.id];
     log.debug(mqttConfifg);
     if (mqttConfifg) {
@@ -195,7 +201,9 @@ server.route({
       }
     }];
     log.debug(response);
-    return reply(response).type('application/json');
+    const r = h.response(response);
+    r.type('application/json');
+    return r;
   },
   config: {
     payload: {
@@ -210,9 +218,11 @@ server.route({
 server.route({
   method: 'GET',
   path: '/upnp/amazon-ha-bridge/setup.xml',
-  handler: function (request, reply) {
-    log.info('SETUP', request.url.path);
-    return reply(setupFile).type('application/xml');
+  handler: function (request, h) {
+    log.info('SETUP', request.route.path);
+    const r = h.response(setupFile);
+    r.type('application/xml');
+    return r;
   }
 });
 
@@ -220,9 +230,9 @@ server.route({
 server.route({
   method: '*',
   path: '/{path*}',
-  handler: function (request, reply) {
-    log.error('MISC', request.method, request.url.path);
-    return reply(400);
+  handler: function (request, h) {
+    log.error('MISC', request.route.path);
+    throw Boom.badRequest();
   }
 });
 

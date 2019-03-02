@@ -26,6 +26,7 @@
   "author": "Kai Kramer",
   "license": "MIT",
   "dependencies": {
+    "boom": "^7.3.0",
     "hapi": "^18.1.0",
     "mqtt": "^2.18.8",
     "peer-ssdp": "0.0.5",
