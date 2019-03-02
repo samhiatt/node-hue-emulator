@@ -15,6 +15,7 @@ var host = config.publish;
 var port = config.port;
 
 var mqttConnected;
+var seen = false;
 
 log.setLevel(config.verbose);
 
@@ -150,6 +151,10 @@ server.route({
   path: '/api/{name}/lights',
   handler: function (request, h) {
     log.info('LIGHTS', request.url.pathname);
+    if (!seen) {
+      seen = true;
+      mqtt.publish(config.name + '/connected', '2', { retain: true });
+    }
     const response = h.response(alexaConfig);
     response.type('application/json');
     return response;
@@ -162,6 +167,10 @@ server.route({
   path: '/api/{name}/lights/{id}',
   handler: function (request, h) {
     log.info('LIGHTS', request.url.pathname);
+    if (!seen) {
+      seen = true;
+      mqtt.publish(config.name + '/connected', '2', { retain: true });
+    }
     var lightState = alexaConfig[request.params.id];
     if (lightState) {
       const response = h.response(lightState);
@@ -179,8 +188,12 @@ server.route({
   path: '/api/{name}/lights/{id}/state',
   handler: function (request, h) {
     var command = JSON.parse(request.payload.toString());
-    log.debug('PUT', request.url.pathname);
-    log.info('command', request.url.pathname);
+    log.info('COMMAND', request.url.pathname);
+    log.info('command', JSON.stringify(command));
+    if (!seen) {
+      seen = true;
+      mqtt.publish(config.name + '/connected', '2', { retain: true });
+    }
     var mqttConfifg = alexaMQTTConfig[request.params.id];
     log.debug(mqttConfifg);
     if (mqttConfifg) {
@@ -192,6 +205,7 @@ server.route({
       } else if (command.on) {
         value = mqttConfifg.switch.on;
       }
+
       mqtt.publish(topic, value, function () {
         log.debug('meta', topic, value);
       });
@@ -221,6 +235,10 @@ server.route({
   path: '/upnp/amazon-ha-bridge/setup.xml',
   handler: function (request, h) {
     log.info('SETUP', request.url.pathname);
+    if (!seen) {
+      seen = true;
+      mqtt.publish(config.name + '/connected', '2', { retain: true });
+    }
     const r = h.response(setupFile);
     r.type('application/xml');
     return r;
