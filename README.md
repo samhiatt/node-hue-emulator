@@ -31,6 +31,8 @@ alexa:
       off: off
     control:
       topic: lox/set/arbeitszimmer/beleuchtung/arbeitszimmer
+    color:
+      topic: lox/set/arbeitszimmer/beleuchtung/arbeitszimmer
 ```
 
 ## Build and run local Docker container
